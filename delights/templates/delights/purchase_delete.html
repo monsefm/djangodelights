@@ -1,0 +1,26 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row" data-aos="fade-down"  data-aos-duration="900">
+  <div class="col-sm-12 my-2 pt-3">
+      <h1 class="module_title">Delete Purchase</h1>
+      <hr>
+  </div>
+  <div class="col-sm-12 mt-5"> 
+    <div class="mb-3">     
+      <a href="{% url 'purchaselist'%}"><button class="btn btn-secondary">Back</button></a>
+    </div>
+    <div>
+        <form method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-sm-12">
+              <p>Are you sure you want to delete "{{ object }}"?</p>
+            </div>
+            <div class="col-sm-12 mt-4"><button class="btn btn-danger" type="submit">Confirm delete</button> </div>             
+          </div>
+        </form>        
+      </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends './base.html' %}
+{% block script %}
+{% endblock %}
+{% block content %}
+<div class="row" data-aos="fade-down"  data-aos-duration="900">
+  <div class="col-sm-12 my-2 pt-3">
+      <h1 class="module_title">Inventory List</h1>
+      <hr>
+  </div>
+  <div class="col-sm-12 mt-5"> 
+    <div class="mb-3">
+      <a href="{% url 'inventorycreate' %}"><button class="btn btn-success">Add Ingredient</button></a>
+      <a href="{% url 'home' %}"><button class="btn btn-secondary">Back</button></a>
+    </div>
+    <div class="my-1 text-right">
+      <h4><strong>Total Cost: ${{total}}</strong></h4>
+    </div>
+    <div>
+      <table id="ingredients">
+        <tr>
+          <th>Name</th>
+          <th>Price per Unit</th>
+          <th>Stock</th>   
+          <th>Restock</th>
+          <th>Current stock</th>
+          <th>Create by</th>
+          <th>Actions </th>     
+        </tr>
+        {% for i in inventory_list|dictsort:"ingredient" %}
+        <tr>
+        <tr {% if i.current_stock == 0 %} class="table-danger" {% endif %}>
+            <td>{{ i.ingredient }}</td>
+            <td class="text-right">${{ i.price }}</td>
+            <td class="text-right">{{ i.stock }}</td> 
+            <td class="text-right">{{ i.re_stock }}</td>
+            <td class="text-right">{% if i.current_stock == 0 %} <i class="icon-nostock fa fa-exclamation-triangle"></i>
+              {% endif %} {{ i.current_stock }}</td>
+            <td>{{ i.create_by }}</td>
+            <td>
+              <a href="{% url 'inventoryupdate' i.id %}"><button class="btn btn-primary">Edit</button></a>
+              <a href="{% url 'inventorydelete' i.id %}"><button class="btn btn-danger">Delete</button></a>
+            </td>
+        </tr>
+        {% endfor %}
+      </table>
+      </div>
+  </div>
+</div>
+{% endblock %}

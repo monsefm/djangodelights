@@ -1,0 +1,32 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row" data-aos="fade-down"  data-aos-duration="900">
+  <div class="col-sm-12 my-2 pt-3">
+      <h1 class="module_title">Create Recipe Requirement</h1>
+      <hr>
+  </div>
+  <div class="col-sm-12 mt-5"> 
+    <div class="mb-3">     
+      <a href="{% url 'recipereqlist' menuid %}"><button class="btn btn-secondary">Back</button></a>
+    </div>
+    <div>
+        <form method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-sm-12">
+              {{ form.menuitem_id|as_crispy_field }} 
+            </div>
+            <div class="col-sm-12">
+              {{ form.inventory_id|as_crispy_field }}
+            </div>
+            <div class="col-sm-12">
+              {{ form.cant|as_crispy_field }}
+            </div>          
+            <div class="col-sm-12 mt-4"><button class="btn btn-success" type="submit">Create</button> </div>             
+          </div>
+        </form>        
+      </div>
+  </div>
+</div>
+{% endblock %}

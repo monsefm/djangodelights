@@ -1,0 +1,40 @@
+{% extends './base.html' %}
+{% block script %}
+{% endblock %}
+{% block content %}
+<div class="row" data-aos="fade-down"  data-aos-duration="900">
+  <div class="col-sm-12 my-2 pt-3">
+      <h1 class="module_title">Purchase List ({{ customer_name }})</h1>
+      <hr>
+  </div>
+  <div class="col-sm-12 mt-5"> 
+    <div class="mb-3">      
+      <a href="{% url 'customerlist' %}"><button class="btn btn-secondary">Back</button></a>
+    </div>
+    <div class="my-1 text-right">
+      <h4><strong>Total: ${{total}}</strong></h4>
+    </div>
+    <div>      
+      <table id="menu">      
+        <tr>          
+          <th>Code</th>
+          <th>Menu Item</th>  
+          <th>Total</th> 
+          <th>Day</th>  
+          <th>Time</th>  
+        </tr>
+        {% for p in purchases|dictsort:"id" %}         
+        <tr> 
+            <td>#{{ p.id }}</td>           
+            <td>{{ p.menuitem_name }}</td>
+            <td>{{ p.total }}</td>  
+            <td>{{ p.day }}</td>   
+            <td>{{p.time}}</td>   
+        </tr>
+        
+        {% endfor %}
+      </table>      
+    </div>
+  </div>
+</div>
+{% endblock %}

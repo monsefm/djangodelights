@@ -1,0 +1,60 @@
+{% extends './base.html' %}
+{% block script %}
+{% endblock %}
+{% block content %}
+<div class="row" data-aos="fade-down"  data-aos-duration="900">
+  <div class="col-sm-12 my-2 pt-3">
+      <h1 class="module_title">Purchase List</h1>
+      <hr>
+  </div>
+  <div class="col-sm-12 mt-5"> 
+    <div class="row">
+      <div class="col-sm-6 mb-3">
+        <a href="{% url 'purchasecreate' %}"><button class="btn btn-success">Add Purchase</button></a>
+        <a href="{% url 'home' %}"><button class="btn btn-secondary">Back</button></a>
+      </div>
+      <div class="col-sm-6 mb-3 text-right">
+        <input id="search_date" type="text" placeholder="yyyy-mm-dd">
+        <button class="btn btn-primary" onclick="getData()">Search</button> 
+      </div>
+    </div>  
+    <div class="my-1 text-right">
+      <h4><strong>Total: ${{total}}</strong></h4>
+    </div>     
+    <div>      
+      <table id="menu">      
+        <tr>          
+          <th>Code</th>
+          <th>Customer</th> 
+          <th>Menu Item</th>  
+          <th>Total</th> 
+          <th>Date</th>            
+          <th>Actions </th>     
+        </tr>
+        {% for p in purchase_list|dictsort:"id" %}         
+        <tr> 
+            <td class="text-right" >#{{ p.id }}</td>  
+            <td>{{ p.customer_id }}</td>         
+            <td>{{ p.menuitem_id.name }}</td>
+            <td class="text-right" >{{ p.menuitem_id.price }}</td>  
+            <td>{{ p.day }} - {{p.time}}</td>             
+            <td>
+              <a href="{% url 'purchaseupdate' p.id %}"><button class="btn btn-primary">Edit</button></a>
+              <a href="{% url 'purchasedelete' p.id %}"><button class="btn btn-danger">Delete</button></a>
+            </td>
+        </tr>
+        
+        {% endfor %}
+      </table>
+      </div>
+  </div>
+</div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript"> 
+      function getData(){ 
+          var search = $('#search_date').val();    
+	        window.location.replace("/purchase/list/?search=" + search);
+      }  
+    </script>    
+{% endblock %}

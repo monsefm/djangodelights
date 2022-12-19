@@ -1,0 +1,38 @@
+{% extends './base.html' %}
+{% block script %}
+{% endblock %}
+{% block content %}
+<div class="row" data-aos="fade-down"  data-aos-duration="900">
+  <div class="col-sm-12 my-2 pt-3">
+      <h1 class="module_title">Customer List</h1>
+      <hr>
+  </div>
+  <div class="col-sm-12 mt-5"> 
+    <div class="mb-3">
+      <a href="{% url 'customercreate' %}"><button class="btn btn-success">Add Customer</button></a>
+      <a href="{% url 'home' %}"><button class="btn btn-secondary">Back</button></a>
+    </div>
+    <div>
+      <table id="menu">
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>                
+          <th>Actions </th>     
+        </tr>
+        {% for c in customer_list|dictsort:"first_name"|dictsort:"last_name" %}
+        <tr>
+        <tr>
+            <td>{{ c.first_name }}</td>                 
+            <td>{{ c.last_name }}</td>            
+            <td>
+              <a href="{% url 'customerupdate' c.id %}"><button class="btn btn-primary">Edit</button></a>
+              <a href="{% url 'customerdelete' c.id %}"><button class="btn btn-danger">Delete</button></a>             
+              <a href="{% url 'purchaselistcustomer' c.id %}"><button class="btn btn-warning">Show Purchase</button></a>             
+            </td>
+        </tr>
+        {% endfor %}
+      </table>
+      </div>
+  </div>
+</div>
+{% endblock %}

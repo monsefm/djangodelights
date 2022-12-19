@@ -1,0 +1,51 @@
+{% extends './base.html' %}
+{% block script %}
+{% endblock %}
+{% block content %}
+<div class="row" data-aos="fade-down"  data-aos-duration="900">
+  <div class="col-sm-12 my-2 pt-3">
+      <h1 class="module_title">Menu List</h1>
+      <hr>
+  </div>
+  <div class="col-sm-12 mt-5"> 
+    <div class="mb-3">
+      <a href="{% url 'menuitemcreate' %}"><button class="btn btn-success">Add Menu Item</button></a>
+      <a href="{% url 'home' %}"><button class="btn btn-secondary">Back</button></a>
+    </div>
+    <div class="my-1 text-right">
+      <p><strong>Note: Menu price is sum of ingredients and handwork price</strong></p>
+    </div>
+    <div>
+      <table id="menu">
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Handwork price</th>    
+          <th>Price</th>          
+          <th>Create by</th>          
+          <th>State</th>         
+          <th>Actions </th>     
+        </tr>
+        {% for m in menuitem_list|dictsort:"name" %}
+        <tr>
+        <tr>
+            <td>{{ m.name }}</td>
+            <td>{% if m.menu_type == 'AP' %}Appetizer {% elif m.menu_type == 'EN' %}Entree{% elif m.menu_type == 'DE' %}Dessert{% else %}Other{% endif %}</td>
+            <td class="text-right">{{ m.handwork_price }}</td>    
+            <td class="text-right" >{% if m.price == m.handwork_price %} N/A {% else %} {{ m.price }} {% endif %}</td>            
+            <td>{{ m.create_by }}</td>             
+            <td class="text-center">
+              {% if m.have_stock == 'available' %} <i class="icon-available fa fa-check-circle fa-2x" data-toggle="tooltip" data-placement="top" title="Available"></i>{% elif m.have_stock == 'no stock' %}<i class="icon-nostock fa fa-times-circle fa-2x" data-toggle="tooltip" data-placement="top" title="No stock"></i> {% elif m.have_stock == 'no recipe' %}<i class="icon-norecipe fa fa-bookmark fa-2x" data-toggle="tooltip" data-placement="top" title="No recipe"></i> {% endif %}
+            </td>           
+            <td>
+              <a href="{% url 'menuitemupdate' m.id %}"><button class="btn btn-primary">Edit</button></a>
+              <a href="{% url 'menuitemdelete' m.id %}"><button class="btn btn-danger">Delete</button></a>             
+              <a href="{% url 'recipereqlist' m.id %}"><button class="btn btn-warning">Show Recipe</button></a>             
+            </td>
+        </tr>
+        {% endfor %}
+      </table>
+      </div>
+  </div>
+</div>
+{% endblock %}
